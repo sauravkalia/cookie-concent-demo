@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Injector, OnInit } from '@angular/core';
+import { NgcCookieConsentService } from 'ngx-cookieconsent';
 
 @Component({
   selector: 'app-child-one',
@@ -7,7 +8,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ChildOneComponent implements OnInit {
 
-  constructor() { }
+  shouldInject = true;
+  ccService!: NgcCookieConsentService;
+
+  constructor(
+    // private ccService: NgcCookieConsentService
+    private injector: Injector
+  ) { 
+    // ccService.init;
+    if(this.shouldInject) {
+      this.ccService =  this.injector.get(NgcCookieConsentService);
+    }
+  }
 
   ngOnInit(): void {
   }
